@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import 'package:AyatekeApp/providers/auth.dart';
-import 'package:AyatekeApp/utils/validate.dart';
-import 'package:AyatekeApp/styles/styles.dart';
-import 'package:AyatekeApp/widgets/styled_flat_button.dart';
+import 'package:smsApp/providers/auth.dart';
+import 'package:smsApp/utils/validate.dart';
+import 'package:smsApp/styles/styles.dart';
+import 'package:smsApp/widgets/styled_flat_button.dart';
 
 class PasswordReset extends StatelessWidget {
   @override

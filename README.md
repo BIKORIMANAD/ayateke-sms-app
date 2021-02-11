@@ -1,4 +1,6 @@
-# Ayateke SMS App
+# BarMobileApp
+mobile for Bar Management 
+
 
 A new Flutter project.
 

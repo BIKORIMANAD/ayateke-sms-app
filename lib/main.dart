@@ -1,23 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import 'package:AyatekeApp/providers/auth.dart';
-import 'package:AyatekeApp/providers/todo.dart';
+import 'package:smsApp/providers/auth.dart';
+import 'package:smsApp/providers/todo.dart';
 
-import 'package:AyatekeApp/views/loading.dart';
-import 'package:AyatekeApp/views/login.dart';
-import 'package:AyatekeApp/views/register.dart';
-import 'package:AyatekeApp/views/password_reset.dart';
-import 'package:AyatekeApp/views/todos.dart';
+import 'package:smsApp/views/loading.dart';
+import 'package:smsApp/views/login.dart';
+import 'package:smsApp/views/register.dart';
+import 'package:smsApp/views/password_reset.dart';
+import 'package:smsApp/views/todos.dart';
 
 void main() {
+  ErrorWidget.builder = (FlutterErrorDetails details) => Container();
   runApp(
     ChangeNotifierProvider(
       builder: (context) => AuthProvider(),
       child: MaterialApp(
+
         debugShowCheckedModeBanner: false,
         theme:
-            ThemeData(primaryColor: Colors.indigo[900], accentColor: Color(0x17202a)),
+            ThemeData(primaryColor: Colors.blueAccent, accentColor: Color(0x17202a),fontFamily: 'Raleway'),
+
         // darkTheme: ThemeData.dark(),
         initialRoute: '/',
         routes: {

@@ -6,9 +6,8 @@ class Styles {
   );
 
   static TextStyle h1 = defaultStyle.copyWith(
-    fontWeight: FontWeight.w700,
-    fontSize: 18.0,
-    height: 22 / 18,
+    // fontWeight: FontWeight.w700,
+    // fontSize: 16.0,
   );
 
   static TextStyle p = defaultStyle.copyWith(

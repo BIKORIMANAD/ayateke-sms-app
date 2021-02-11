@@ -1,21 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/gestures.dart';
 import 'package:provider/provider.dart';
-import 'package:AyatekeApp/providers/auth.dart';
-import 'package:AyatekeApp/utils/validate.dart';
-import 'package:AyatekeApp/styles/styles.dart';
-import 'package:AyatekeApp/widgets/notification_text.dart';
-import 'package:AyatekeApp/widgets/styled_flat_button.dart';
+import 'package:smsApp/providers/auth.dart';
+import 'package:smsApp/utils/validate.dart';
+import 'package:smsApp/styles/styles.dart';
+import 'package:smsApp/widgets/notification_text.dart';
+import 'package:smsApp/widgets/styled_flat_button.dart';
+import 'package:smsApp/providers/services.dart';
 
 class LogIn extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
-      appBar: AppBar(
-        
-        title: Text('Ayateke Star Co. Ltd'),
-        leading: Container(),
-      ),
+
+      // backgroundColor: Colors.cyan,
+      // backgroundColorEnd: Colors.indigo,
+      // backgroundColor: Color(0xFF444152),
       body: Center(
         child: Container(
           child: Padding(
@@ -52,76 +53,87 @@ class LogInFormState extends State<LogInForm> {
   @override
   Widget build(BuildContext context) {
     return Form(
+
       key: _formKey,
       child: Column(
+
         crossAxisAlignment: CrossAxisAlignment.stretch,
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
-          Text(
-            'Log in to Ayateke Star ',
-            textAlign: TextAlign.center,
-            style: Styles.h1,
+          CircleAvatar(
+            backgroundColor: Colors.transparent,
+            radius: 70.0,
+            child: Image.asset('assets/images/logo.png'),
           ),
           SizedBox(height: 10.0),
           Consumer<AuthProvider>(
             builder: (context, provider, child) =>
                 provider.notification ?? NotificationText(''),
           ),
-          SizedBox(height: 30.0),
+          SizedBox(height: 10.0),
           TextFormField(
               decoration: Styles.input.copyWith(
-                hintText: 'Phone',
+                icon: Icon(Icons.email),
+                // hintText: 'Type username',
+                labelText: 'Enter username *',
+
               ),
               validator: (value) {
                 email = value.trim();
+                // return Validate.requiredField(value, 'Username is required.');
                 return Validate.validateEmail(value);
-              }),
+              },style: Styles.h1),
           SizedBox(height: 15.0),
           TextFormField(
               obscureText: true,
               decoration: Styles.input.copyWith(
-                hintText: 'Password',
+                icon: Icon(Icons.lock_rounded),
+                labelText: 'Type password',
               ),
               validator: (value) {
                 password = value.trim();
                 return Validate.requiredField(value, 'Password is required.');
-              }),
+              },style: Styles.h1),
           SizedBox(height: 15.0),
-          StyledFlatButton(
-            'Sign In',
+          FlatButton(
+            textColor: Colors.white,
+            height: 45.0,
+            color: Colors.blue[500],
+            splashColor: Colors.blue[200],
             onPressed: submit,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text('SIGN IN', ),
+                Padding(
+                  padding: const EdgeInsets.all(1.0),
+                  child: Icon(Icons.login, color: Colors.white,),
+                ),
+            ],
+            ),
           ),
-          SizedBox(height: 20.0),
+          // SizedBox(height: 20.0),
           // Center(
           //   child: RichText(
           //     text: TextSpan(
-          //       children: [
-          //         TextSpan(
-          //           text: "Don't have an account? ",
-          //           style: Styles.p,
-          //         ),
-          //         TextSpan(
-          //           text: 'Register.',
-          //           style: Styles.p.copyWith(color: Colors.blue[500]),
-          //           recognizer: TapGestureRecognizer()
-          //             ..onTap = () => {
-          //                   Navigator.pushNamed(context, '/register'),
-          //                 },
-          //         ),
-          //       ],
-          //     ),
+          //         text: 'Forgot Your Password?',
+          //         style: Styles.p.copyWith(color: Colors.blue[500]),
+          //         recognizer: TapGestureRecognizer()
+          //           ..onTap = () => {
+          //                 Navigator.pushNamed(context, '/password-reset'),
+          //               }),
           //   ),
           // ),
-          SizedBox(height: 5.0),
+          SizedBox(height: 70.0),
           Center(
             child: RichText(
               text: TextSpan(
-                  text: 'Forgot Your Password?',
-                  style: Styles.p.copyWith(color: Colors.blue[500]),
-                  recognizer: TapGestureRecognizer()
-                    ..onTap = () => {
-                          Navigator.pushNamed(context, '/password-reset'),
-                        }),
+                children: [
+                  TextSpan(
+                    text: Services.powered, style: TextStyle(color: Colors.grey),
+                  ),
+                ],
+              ),
             ),
           ),
         ],

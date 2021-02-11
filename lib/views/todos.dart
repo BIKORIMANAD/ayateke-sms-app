@@ -1,7 +1,12 @@
+import 'package:smsApp/providers/services.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:AyatekeApp/providers/auth.dart';
-import 'package:AyatekeApp/views/request/request_main_screen.dart';
+import 'package:smsApp/providers/auth.dart';
+import 'package:smsApp/views/pump/pump_main_screen.dart';
+import 'package:smsApp/views/history/history_main_screen.dart';
+import 'package:smsApp/views/tarif/tarif.dart';
+import 'package:smsApp/views/profile/ProfileScreen.dart';
+
 class Todos extends StatefulWidget {
   @override
   TodosState createState() => TodosState();
@@ -9,6 +14,7 @@ class Todos extends StatefulWidget {
 
 class TodosState extends State<Todos> {
   String token, username;
+  String greeting;
   void displayProfileMenu(context) {
     showModalBottomSheet(
         context: context,
@@ -27,14 +33,15 @@ class TodosState extends State<Todos> {
               ],
             ),
           );
-        });
+        }
+    );
   }
 
   @override
-  void initState() {
+  void initState() { 
     super.initState();
     AuthProvider.getToken().then((value){
-      // print("Try to token: " + value);
+      // print("Try to have token: " + value);
       setState(() {
         token = value;
       });
@@ -44,7 +51,7 @@ class TodosState extends State<Todos> {
         username = value;
       });
     });
-  }
+}
 
   @override
   Widget build(BuildContext context) {
@@ -52,7 +59,9 @@ class TodosState extends State<Todos> {
       length: 4,
       child: Scaffold(
         appBar: AppBar(
-          title: Text( username ),
+          title: Text(Services.greeting()+", "+ username,
+              style: TextStyle(fontSize: 16,color: Colors.white.withOpacity(0.6))
+          ),
           actions: <Widget>[
             IconButton(
               icon: const Icon(Icons.account_circle),
@@ -64,12 +73,9 @@ class TodosState extends State<Todos> {
           ],
           bottom: TabBar(
             tabs: [
-              // Tab(icon: Icon(Icons.camera_alt)),
-              // Tab(icon: Icon(Icons.business), text: 'Funds'),
-              // HomeScreen();
-              Tab(icon: Icon(Icons.payment), text: 'Request'),
-              Tab(icon: Icon(Icons.payment ), text: 'Daily'),
-              Tab(icon: Icon(Icons.list), text: 'Report'),
+              Tab(icon: Icon(Icons.shopping_cart), text: 'My Pump'),
+              Tab(icon: Icon(Icons.payment ), text: 'History'),
+              Tab(icon: Icon(Icons.list), text: 'Tarif'),
               Tab(icon: Icon(Icons.account_box), text: 'Profile'),
             ],
           ),
@@ -77,10 +83,10 @@ class TodosState extends State<Todos> {
         body: TabBarView(
           children: [
             RequestMainScreen(token: token),
-            Icon(Icons.directions_car),
-            Icon(Icons.directions_car),
-            Icon(Icons.directions_car),
-
+            HistoryMainScreen(token: token),
+            Tarif(token: token),
+            ProfileScreen(token: token),
+            
           ],
         ),
       ),

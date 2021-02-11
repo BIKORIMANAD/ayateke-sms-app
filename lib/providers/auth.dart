@@ -1,9 +1,10 @@
+import 'package:smsApp/providers/services.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
 
-import 'package:AyatekeApp/widgets/notification_text.dart';
+import 'package:smsApp/widgets/notification_text.dart';
 
 enum Status { Uninitialized, Authenticated, Authenticating, Unauthenticated }
 
@@ -16,7 +17,7 @@ class AuthProvider with ChangeNotifier {
   String get token => _token;
   NotificationText get notification => _notification;
 
-  final String api = 'http://192.168.43.70/ayatekestar-sms/public/api/v1/auth';
+  final String api = Services.url + '/auth';
 
   initAuthProvider() async {
     String token = await getToken();
@@ -156,6 +157,8 @@ class AuthProvider with ChangeNotifier {
     String username = storage.getString('name');
     return username;
   }
+
+
 
   logOut([bool tokenExpired = false]) async {
     _status = Status.Unauthenticated;

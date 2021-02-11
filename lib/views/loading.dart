@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:AyatekeApp/styles/styles.dart';
+import 'package:smsApp/styles/styles.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:provider/provider.dart';
-import 'package:AyatekeApp/providers/auth.dart';
-
+import 'package:smsApp/providers/auth.dart';
+import 'package:smsApp/providers/services.dart';
 class Loading extends StatelessWidget {
   initAuthProvider(context) async {
     Provider.of<AuthProvider>(context).initAuthProvider();
@@ -24,7 +24,7 @@ class Loading extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Text(
-              '© Ayatekestar co. Ltd.',
+              Services.appName,
               textAlign: TextAlign.center,
               style: Styles.h1,
             ),

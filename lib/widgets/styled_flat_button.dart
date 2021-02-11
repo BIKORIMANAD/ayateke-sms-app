@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:AyatekeApp/styles/styles.dart';
+import 'package:smsApp/styles/styles.dart';
 
 class StyledFlatButton extends StatelessWidget {
   final String text;
@@ -18,6 +18,7 @@ class StyledFlatButton extends StatelessWidget {
       child: Padding(
         padding: EdgeInsets.symmetric(vertical: 18.0),
         child: Text(
+
           this.text,
           style: Styles.p.copyWith(
             color: Colors.white,

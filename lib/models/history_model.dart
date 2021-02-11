@@ -1,31 +1,31 @@
 import 'dart:convert';
-import 'dart:core';
+
 class Post {
   int id;
   String name;
-  String status;
-  DateTime  datec;
-  Post({this.id, this.name, this.status, this.datec});
+  int totalAmount;
+
+  Post({this.id, this.name, this.totalAmount,});
   factory Post.fromJson(Map<String, dynamic> json) {
     return Post(
       id: json['id'],
       name: json['name'],
-      status: json['status'],
-      datec: DateTime.parse(json['created_at'])
+      totalAmount: json['total_amount'],
     );
   }
   Map<String, dynamic> toJson() {
-    return {"id": id, "name": name, "status": status};
+    return {"id": id, "name": name, "comment": totalAmount};
   }
 
   @override
   String toString() {
-    return 'Post{id:$id,name:$name,status:$status}';
+    return 'Post{id:$id,name:$name,comment:$totalAmount}';
   }
 }
 
 List<Post> postFromJson(String strJson) {
   final str = json.decode(strJson);
+  // print(str);
   return List<Post>.from(str.map((item) {
     return Post.fromJson(item);
   }));
