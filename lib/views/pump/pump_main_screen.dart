@@ -24,7 +24,7 @@ class _RequestMainScreenState extends State<RequestMainScreen> {
     Services.setRequestedChanged(false);
     final result = await Navigator.push(context, MaterialPageRoute(builder: (context) {
       return AddProduct(
-        id: item.id,
+        id: item.pump_id,
         token: this.widget.token,
         title: "Add items " + item.name,
       );
@@ -139,7 +139,7 @@ class _RequestMainScreenState extends State<RequestMainScreen> {
                                                   icon: Icon(Icons.add_road_sharp),
                                                 onPressed: () {
                                                   Navigator.push(context, MaterialPageRoute(builder: (context) {
-                                                    return RequestFormScreen(id: postItem.id,name: postItem.name,
+                                                    return RequestFormScreen(id: postItem.pump_id,name: postItem.name,
                                                       token: this.widget.token,
                                                     );
                                                   })).then((val)=> {

@@ -143,7 +143,7 @@ Future<http.Response> createPost(Pump post, String token) async {
 
 // update
 Future<http.Response> newRequest(Pump post, String token) async {
-  final response = await http.put('$baseUrl/pump',
+  final response = await http.post('$baseUrl/pump',
       headers: {
         "content-type": "application/json",
         HttpHeaders.authorizationHeader: "Bearer " + token

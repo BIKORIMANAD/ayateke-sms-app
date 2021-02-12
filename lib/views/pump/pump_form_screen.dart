@@ -3,6 +3,7 @@ import 'package:smsApp/providers/domain/service/request_api.dart';
 import 'package:flutter/material.dart';
 import 'package:smsApp/styles/styles.dart';
 import 'package:smsApp/widgets/styled_flat_button.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 var _scaffoldState = GlobalKey<ScaffoldState>();
 
@@ -23,11 +24,15 @@ class _RequestFormScreenState extends State<RequestFormScreen> {
   String _title;
   TextEditingController _controllerName = TextEditingController();
   TextEditingController _controllerqty = TextEditingController();
+  FToast fToast;
   @override
   void initState() {
     // _controllerName.text = widget.name;
     _title = widget.id == null?"create":"Update";
     super.initState();
+    fToast = FToast();
+    fToast.init(context);
+
   }
 
   @override
@@ -99,18 +104,45 @@ class _RequestFormScreenState extends State<RequestFormScreen> {
                                 _isApiProcess = true;
                               });
                               Pump post = Pump(
-                                  id: widget.id, name: name, qty: qty);
+                                  pump_id: widget.id, name: name, qty: qty);
                                   // id: widget.id, name: name, comment: comment);
-                              print("POSTED DATA" + postToJson(post));
+                              // print("POSTED DATA" + postToJson(post));
                               //print(widget.token);
                               newRequest(post, widget.token).then((response) {
                                 _isApiProcess = false;
                                 setState(() {});
-                                print("POSTED DATA STATUS =====>" +
-                                    response.statusCode.toString());
-                                print(response.body);
+                                // print("POSTED DATA STATUS =====>" + response.statusCode.toString());
+                                // print(response.body);
                                 if (response.statusCode == 200) {
-                                  //print("response " + response.toString() );
+                                  print("response " + response.toString() );
+
+                                    Widget toast = Container(
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 24.0, vertical: 12.0),
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(
+                                            25.0),
+                                        color: Colors.greenAccent,
+                                      ),
+                                      child: Row(
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: [
+                                          Icon(Icons.check),
+                                          SizedBox(
+                                            width: 12.0,
+                                          ),
+                                          Text("Request submitted successfully"),
+                                        ],
+                                      ),
+                                    );
+
+
+                                    fToast.showToast(
+                                      child: toast,
+                                      gravity: ToastGravity.CENTER,
+                                      toastDuration: Duration(seconds: 5),
+                                    );
+
                                   Navigator.pop(context);
                                 } else {
                                   showSnackBarMessage("Failed to submit data");

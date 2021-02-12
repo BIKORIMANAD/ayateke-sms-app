@@ -2,16 +2,16 @@ import 'dart:convert';
 
 class Pump {
 
-  int id;
+  int pump_id;
   String name;
   String line;
   String type;
   String qty;
 
-  Pump({this.id, this.name, this.line,this.type, this.qty});
+  Pump({this.pump_id, this.name, this.line,this.type, this.qty});
   factory Pump.fromJson(Map<String, dynamic> json) {
     return Pump(
-      id: json['pump_id'],
+      pump_id: json['pump_id'],
       name: json['pump_name'],
       line: json['line_name'],
       type: json['pump_type'],
@@ -19,12 +19,12 @@ class Pump {
     );
   }
   Map<String, dynamic> toJson() {
-    return {"id": id, "name": name, "line_name": line,"pump_type":type,"qty":qty};
+    return {"pump_id": pump_id, "name": name, "line_name": line,"pump_type":type,"qty":qty};
   }
 
   @override
   String toString() {
-    return 'Post{id:$id,name:$name,line_name:$line ,pump_type:$type,qty:$qty}';
+    return 'Post{pump_id:$pump_id,name:$name,line_name:$line ,pump_type:$type,qty:$qty}';
   }
 }
 
