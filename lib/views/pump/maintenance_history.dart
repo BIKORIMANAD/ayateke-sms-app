@@ -1,6 +1,6 @@
 
 import 'package:flutter/material.dart';
-import 'package:smsApp/providers/domain/service/history_api.dart';
+import 'package:smsApp/providers/domain/service/request_api.dart';
 
 var _scaffoldState = GlobalKey<ScaffoldState>();
 
@@ -49,7 +49,7 @@ class _TarifState extends State<Tarif> {
               child: new TextField(
                 controller: searchController,
                 decoration: InputDecoration(
-                  hintText: 'Search in tarif',
+                  hintText: 'search in maintenance',
                   contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
                   border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(5.0)),
@@ -59,7 +59,7 @@ class _TarifState extends State<Tarif> {
 
             new Expanded(
               child: FutureBuilder(
-                  future: getProductTarif(widget.token),
+                  future: getPumpRequest(widget.token),
                   builder: (BuildContext context, AsyncSnapshot snapshot) {
                     if (snapshot.data == null) {
                       return Container(

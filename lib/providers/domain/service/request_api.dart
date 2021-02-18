@@ -1,10 +1,9 @@
 import 'dart:io';
 import 'package:smsApp/providers/services.dart';
 import 'package:smsApp/models/Pump.dart';
+import 'package:smsApp/models/PumpFuelRecord.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-
-import 'package:smsApp/models/ProductModel.dart';
 import 'package:smsApp/models/RequestModel.dart';
 import 'package:smsApp/models/ResponseModel.dart';
 import 'package:smsApp/models/ProfileModel.dart';
@@ -82,64 +81,62 @@ Future<ResponseModel> requestItem(RequestModel request, String token) async {
   return resultData;
 }
 
-Future<List<ProductModel>> getProductInStock(String token) async{
-  String url = baseUrl + "/bar_command";
-  List<ProductModel> products = [];
-  //print(url);
-  //Here send the get request to check for available stock
-  final response = await http.get(url, headers: {
-    HttpHeaders.authorizationHeader: "Bearer " + token
-  });
-
-  //Here decode the json information
-  var data = json.decode(response.body);
-  //print(data);
-  try{
-    for(var item in data){
-      //print("OK Now creating some information");
-      // print(item);
-      ProductModel product = ProductModel(
-        id: item["detail_id"], 
-        name: item["detail"]["name"], 
-        price: double.parse(item["detail"]["selling_rice"].toString()), 
-        quantity: double.parse(item["quantity"].toString())
-      );
-      //print("Now the object created");
-      products.add(product);
-    }
-  } catch(e){
-    print(e);
-  }
-  // print("OK");
-  //print(products);
-  return products;
-}
+// Future<List<ProductModel>> getProductInStock(String token) async{
+//   String url = baseUrl + "/bar_command";
+//   List<ProductModel> products = [];
+//   //print(url);
+//   //Here send the get request to check for available stock
+//   final response = await http.get(url, headers: {
+//     HttpHeaders.authorizationHeader: "Bearer " + token
+//   });
+//
+//   //Here decode the json information
+//   var data = json.decode(response.body);
+//   //print(data);
+//   try{
+//     for(var item in data){
+//       //print("OK Now creating some information");
+//       // print(item);
+//       ProductModel product = ProductModel(
+//         id: item["detail_id"],
+//         name: item["detail"]["name"],
+//         price: double.parse(item["detail"]["selling_rice"].toString()),
+//         quantity: double.parse(item["quantity"].toString())
+//       );
+//       //print("Now the object created");
+//       products.add(product);
+//     }
+//   } catch(e){
+//     print(e);
+//   }
+//   // print("OK");
+//   //print(products);
+//   return products;
+// }
 
 Future<List<Pump>> getPump(String token) async {
   // something here
-
-  //print("Before Sending the request: " + token);
+  // print("Before Sending the request: " + token);
   String url = baseUrl + "/pump";
-  print(url);
+  // print(url);
   final response = await http.get(url, headers: {
     HttpHeaders.authorizationHeader: "Bearer " + token
   });
-  print(response.body);
+  // print(response.body);
   return postFromJson(response.body);
-
 }
 
-Future<http.Response> createPost(Pump post, String token) async {
-  String data = postToJson(post);
-  //print(data);
-  final response = await http.post('$baseUrl/bar_request',
-      headers: {
-        "content-type": "application/json",
-        HttpHeaders.authorizationHeader: "Bearer " + token
-      }, body: data);
-  //print(response.body);
-  return response;
-}
+// Future<http.Response> createPost(Pump post, String token) async {
+//   String data = postToJson(post);
+//   //print(data);
+//   final response = await http.post('$baseUrl/bar_request',
+//       headers: {
+//         "content-type": "application/json",
+//         HttpHeaders.authorizationHeader: "Bearer " + token
+//       }, body: data);
+//   //print(response.body);
+//   return response;
+// }
 
 // update
 Future<http.Response> newRequest(Pump post, String token) async {
@@ -152,13 +149,34 @@ Future<http.Response> newRequest(Pump post, String token) async {
 }
 
 // delete
-Future<http.Response> deletePost(int id, String token) async {
+// Future<http.Response> deletePost(int id, String token) async {
+//
+//   final response = await http.delete('$baseUrl/bar_request/$id}',
+//       headers: {
+//         "content-type": "application/json",
+//         HttpHeaders.authorizationHeader: "Bearer " + token
+//       });
+//   //print(response.body);
+//   return response;
+// }
 
-  final response = await http.delete('$baseUrl/bar_request/$id}',
+Future<http.Response> newReport(PumpFuelRecord post, String token) async {
+  final response = await http.post('$baseUrl/daily_report',
       headers: {
         "content-type": "application/json",
         HttpHeaders.authorizationHeader: "Bearer " + token
-      });
-  //print(response.body);
+      }, body: dataToJson(post));
   return response;
+}
+
+Future<List<Pump>> getPumpRequest(String token) async {
+  // something here
+  // print("Before Sending the request: " + token);
+  String url = baseUrl + "/pump_request";
+  // print(url);
+  final response = await http.get(url, headers: {
+    HttpHeaders.authorizationHeader: "Bearer " + token
+  });
+  // print(response.body);
+  return postFromJson(response.body);
 }

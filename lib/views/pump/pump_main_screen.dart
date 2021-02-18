@@ -1,9 +1,8 @@
 import 'package:smsApp/models/Pump.dart';
 import 'package:smsApp/providers/domain/service/request_api.dart';
 import 'package:smsApp/providers/services.dart';
-import 'package:smsApp/views/pump/pump_form_screen.dart';
-import 'package:smsApp/views/pump/AddProduct.dart';
-
+import 'package:smsApp/views/pump/fuel_pump_request_screen.dart';
+import 'package:smsApp/views/pump/fuel_pump_record_screen.dart';
 import 'package:flutter/material.dart';
 
 class RequestMainScreen extends StatefulWidget {
@@ -23,11 +22,7 @@ class _RequestMainScreenState extends State<RequestMainScreen> {
   openAddItemPage(BuildContext context, Pump item) async{
     Services.setRequestedChanged(false);
     final result = await Navigator.push(context, MaterialPageRoute(builder: (context) {
-      return AddProduct(
-        id: item.pump_id,
-        token: this.widget.token,
-        title: "Add items " + item.name,
-      );
+      return ;
     }));
 
     if(result == "Changed" || Services.getRequestedChanged()){
@@ -50,9 +45,11 @@ class _RequestMainScreenState extends State<RequestMainScreen> {
           
           builder: (context, snapshot) {
             if (snapshot.hasError) {
-              return Center(
-                child: Text(snapshot.error.toString()),
-              );
+              return Center(child: CircularProgressIndicator(
+                backgroundColor: Colors.redAccent,
+                valueColor: AlwaysStoppedAnimation(Colors.green),
+                strokeWidth: 10,
+              ), );
             } else if (snapshot.connectionState == ConnectionState.done) {
               var response = snapshot.data as List<Pump>;
               // print("response + $response");
@@ -114,21 +111,30 @@ class _RequestMainScreenState extends State<RequestMainScreen> {
                                           ),
                                           Row(
                                             children: <Widget>[
-                                              Icon(Icons.arrow_circle_up, color: Colors.blueAccent),
-                                              Container(
-                                                margin: EdgeInsets.only(left: 3.0),
-                                                child: Text("Submit",
-                                                    style: TextStyle(color: Colors.black45)),
-                                              )
-                                              ],
-                                          ),
-                                          Row(
-                                            children: <Widget>[
                                               Icon(Icons.import_export_sharp, color: Colors.blueAccent),
                                               Container(
                                                 margin: EdgeInsets.only(left: 3.0),
                                                 child: Text("Maintenance",
                                                     style: TextStyle(color: Colors.black45)),
+                                              )
+                                              ],
+                                          ),
+
+                                          Row(
+                                            children: <Widget>[
+                                              TextButton.icon(
+                                                label: Text('Submit',style: TextStyle(color: Colors.black45)),
+                                                icon: Icon(Icons.arrow_circle_up),
+                                                onPressed: () {
+                                                  Navigator.push(context, MaterialPageRoute(builder: (context) {
+                                                    return RecordFormScreen(id: postItem.pump_id,name: postItem.name,
+                                                      token: this.widget.token,
+                                                    );
+                                                  })).then((val)=> {
+                                                    //getRequest(this.widget.token);
+                                                    setState(() {})
+                                                  });
+                                                },
                                               )
                                             ],
                                           ),
@@ -167,7 +173,7 @@ class _RequestMainScreenState extends State<RequestMainScreen> {
               //   child: Text("Success"),
               // );
             } else {
-              return Center(child: CircularProgressIndicator());
+              return Center(child: CircularProgressIndicator(backgroundColor: Colors.lightBlueAccent,));
             }
           },
         ),

@@ -98,7 +98,32 @@ class _RequestFormScreenState extends State<RequestFormScreen> {
                             String name = _controllerName.text.trim();
                             String qty = _controllerqty.text.trim();
                             if (name.isEmpty || qty.isEmpty) {
-                              showSnackBarMessage("Some is required");
+                              Widget toast = Container(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 24.0, vertical: 12.0),
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(
+                                      25.0),
+                                  color: Colors.redAccent,
+                                ),
+                                child: Row(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    Icon(Icons.close_rounded),
+                                    SizedBox(
+                                      width: 12.0,
+                                    ),
+                                    Text("All fields are required"),
+                                  ],
+                                ),
+                              );
+
+
+                              fToast.showToast(
+                                child: toast,
+                                gravity: ToastGravity.CENTER,
+                                toastDuration: Duration(seconds: 5),
+                              );
                             } else {
                               setState(() {
                                 _isApiProcess = true;
@@ -114,7 +139,7 @@ class _RequestFormScreenState extends State<RequestFormScreen> {
                                 // print("POSTED DATA STATUS =====>" + response.statusCode.toString());
                                 // print(response.body);
                                 if (response.statusCode == 200) {
-                                  print("response " + response.toString() );
+                                  // print("response " + response.toString() );
 
                                     Widget toast = Container(
                                       padding: const EdgeInsets.symmetric(
@@ -131,7 +156,7 @@ class _RequestFormScreenState extends State<RequestFormScreen> {
                                           SizedBox(
                                             width: 12.0,
                                           ),
-                                          Text("Request submitted successfully"),
+                                          Text(response.toString()),
                                         ],
                                       ),
                                     );
@@ -145,7 +170,32 @@ class _RequestFormScreenState extends State<RequestFormScreen> {
 
                                   Navigator.pop(context);
                                 } else {
-                                  showSnackBarMessage("Failed to submit data");
+                                  Widget toast = Container(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 24.0, vertical: 12.0),
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(
+                                          25.0),
+                                      color: Colors.redAccent,
+                                    ),
+                                    child: Row(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        Icon(Icons.close_rounded),
+                                        SizedBox(
+                                          width: 12.0,
+                                        ),
+                                        Text(response.toString()),
+                                      ],
+                                    ),
+                                  );
+
+
+                                  fToast.showToast(
+                                    child: toast,
+                                    gravity: ToastGravity.CENTER,
+                                    toastDuration: Duration(seconds: 5),
+                                  );
                                 }
                               });
                             }

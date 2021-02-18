@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:smsApp/providers/auth.dart';
 import 'package:smsApp/views/pump/pump_main_screen.dart';
-import 'package:smsApp/views/history/history_main_screen.dart';
-import 'package:smsApp/views/tarif/tarif.dart';
+import 'package:smsApp/views/pump/request_history.dart';
+import 'package:smsApp/views/pump/maintenance_history.dart';
 import 'package:smsApp/views/profile/ProfileScreen.dart';
 
 class Todos extends StatefulWidget {
@@ -74,8 +74,8 @@ class TodosState extends State<Todos> {
           bottom: TabBar(
             tabs: [
               Tab(icon: Icon(Icons.shopping_cart), text: 'My Pump'),
-              Tab(icon: Icon(Icons.payment ), text: 'History'),
-              Tab(icon: Icon(Icons.list), text: 'Tarif'),
+              Tab(icon: Icon(Icons.payment ), text: 'Request'),
+              Tab(icon: Icon(Icons.list), text: 'Maintenance'),
               Tab(icon: Icon(Icons.account_box), text: 'Profile'),
             ],
           ),
@@ -83,7 +83,7 @@ class TodosState extends State<Todos> {
         body: TabBarView(
           children: [
             RequestMainScreen(token: token),
-            HistoryMainScreen(token: token),
+            RequestHistory(token: token),
             Tarif(token: token),
             ProfileScreen(token: token),
             
